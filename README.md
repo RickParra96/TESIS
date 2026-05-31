@@ -28,3 +28,17 @@ Este proyecto es parte de mi maestría en ciencia de datos en la Universidad. El
 
 - Este `README.md` debe mantenerse actualizado cada vez que se realicen cambios importantes en el proyecto.
 - Las notas en `agentes.md` y los notebooks deben reflejar las decisiones principales y el estado actual del trabajo.
+
+## Reproducibilidad de experimentos
+
+Este repositorio registra y preserva resultados de entrenamiento en una estructura `results/<timestamp>/` creada automáticamente por las notebooks. Cada ejecución crea un directorio con:
+
+- `models/` — modelos guardados (Pickle, zip, etc.)
+- `metrics/` — `metrics.csv` y `metrics.json` con métricas por experimento
+- `logs/` — salidas verbose y logs de entrenamiento
+- `figures/` — figuras y curvas (confusion matrix, ROC, loss/metric per epoch)
+- `reports/` — resúmenes y tablas listas para el paper
+- `manifest.json` — metadatos esenciales: hash del dataset, commit git (si disponible), timestamp UTC y `random_state`
+
+Para reproducir exactamente un experimento, carga el commit indicado en `manifest.json`, instala las dependencias listadas en `requirements.txt` dentro del mismo directorio `results/<timestamp>/`, y ejecuta la notebook con el mismo `random_state`.
+

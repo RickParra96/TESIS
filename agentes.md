@@ -37,3 +37,14 @@ Este proyecto es un trabajo de titulación enfocado en aplicar modelos de transf
 ## Uso esperado
 
 Este archivo documenta el contexto del proyecto y los agentes de análisis para facilitar el trabajo colaborativo y el desarrollo del modelo.
+
+## Política de reproducibilidad (obligatoria)
+
+- Todas las notebooks deben crear automáticamente un directorio `results/<timestamp>/` con los artefactos de cada corrida: modelos, métricas, logs, figuras y un `manifest.json` con metadatos reproducibles (hash del dataset, commit git si aplica, timestamp UTC, y `random_state`).
+- Antes de entrenar, fijar `random_state` y propagar la semilla a `numpy`, `random` y `torch` cuando corresponda.
+- Guardar los requerimientos de Python en `requirements.txt` dentro del directorio de resultados usando `pip freeze` (o similar) para que las dependencias queden registradas.
+- Los modelos deben guardarse en `results/<timestamp>/models/` y las métricas agregarse a `results/<timestamp>/metrics/metrics.csv` y `metrics.json`.
+- Incluir instrucciones de cómo reproducir exactamente el experimento en `results/<timestamp>/README.md` si algún paso no es trivial.
+
+Esta política debe respetarse en todas las notebooks del repositorio para asegurar trazabilidad y facilidad de publicación de resultados en el paper.
+

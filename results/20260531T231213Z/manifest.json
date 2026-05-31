@@ -1,0 +1,7 @@
+{
+  "timestamp_utc": "20260531T231213Z",
+  "dataset": "data_model_borda30.csv",
+  "dataset_hash_sha256": "5faeeae20757af397abff42de82cff8eeefe52fedba211f20855500ee3b4ed8c",
+  "git_commit": "687076822bfbb6a5f8a911e89943e027196202ef",
+  "random_state": 42
+}

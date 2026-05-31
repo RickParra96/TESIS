@@ -1,0 +1,4 @@
+Summary of experiments
+               dataset        model  seed  accuracy  f1_weighted  auc_roc  time_saved                                                                                    model_path
+data_model_borda30.csv RandomForest    42  0.845669     0.842615 0.950521    1.236949                                                                                           NaN
+data_model_borda30.csv     TabNet_3    42  0.859966     0.855709 0.956729         NaN c:\Users\ricar\OneDrive\Desktop\TESIS\results\20260531T231213Z\models\tabnet_borda30_best.zip

@@ -1,0 +1,34 @@
+
+
+---
+
+TabPFN_3 results:
+Test accuracy: 0.8959209419680404
+Test weighted F1: 0.895407564237977
+Test AUC-ROC: 0.9744670264672646
+
+Classification report TabPFN_3:
+              precision    recall  f1-score   support
+
+        EXPL       0.93      0.76      0.84        17
+          HB       0.78      0.79      0.78       108
+          LP       0.92      0.92      0.92      2520
+         TRE       0.71      0.48      0.57        50
+       TREMI       0.84      0.81      0.82       142
+       TRESP       0.65      0.76      0.70        37
+         VLP       0.89      0.83      0.86       110
+          VT       0.89      0.89      0.89      1772
+
+    accuracy                           0.90      4756
+   macro avg       0.83      0.78      0.80      4756
+weighted avg       0.90      0.90      0.90      4756
+
+Confusion matrix TabPFN_3:
+[[  13    0    3    0    0    0    0    1]
+ [   0   85    9    2    1    0    5    6]
+ [   1    3 2320    1    0    2    2  191]
+ [   0    5    6   24   12    0    1    2]
+ [   0    0    6    5  115   12    3    1]
+ [   0    0    3    0    6   28    0    0]
+ [   0   12    3    2    1    0   91    1]
+ [   0    4  180    0    2    1    0 1585]]

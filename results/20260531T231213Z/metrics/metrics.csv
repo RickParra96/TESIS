@@ -1,0 +1,3 @@
+dataset,model,seed,accuracy,f1_weighted,auc_roc,time_saved,model_path
+data_model_borda30.csv,RandomForest,42,0.8456686291000841,0.8426153735308255,0.9505210098508527,1.2369492053985596,
+data_model_borda30.csv,TabNet_3,42,0.8599663582842725,0.8557086444754124,0.9567288546861364,,c:\Users\ricar\OneDrive\Desktop\TESIS\results\20260531T231213Z\models\tabnet_borda30_best.zip

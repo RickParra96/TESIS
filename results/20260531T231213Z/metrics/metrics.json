@@ -1,0 +1,20 @@
+[
+  {
+    "dataset": "data_model_borda30.csv",
+    "model": "RandomForest",
+    "seed": 42,
+    "accuracy": 0.8456686291000841,
+    "f1_weighted": 0.8426153735308255,
+    "auc_roc": 0.9505210098508527,
+    "time_saved": 1.2369492053985596
+  },
+  {
+    "dataset": "data_model_borda30.csv",
+    "model": "TabNet_3",
+    "seed": 42,
+    "accuracy": 0.8599663582842725,
+    "f1_weighted": 0.8557086444754124,
+    "auc_roc": 0.9567288546861364,
+    "model_path": "c:\\Users\\ricar\\OneDrive\\Desktop\\TESIS\\results\\20260531T231213Z\\models\\tabnet_borda30_best.zip"
+  }
+]
