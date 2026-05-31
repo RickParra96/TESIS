@@ -1,0 +1,33 @@
+Best params:
+{'rf__n_estimators': 800, 'rf__min_samples_split': 2, 'rf__min_samples_leaf': 4, 'rf__max_features': 0.5, 'rf__max_depth': 50, 'rf__class_weight': 'balanced'}
+
+CV f1_weighted: 0.8505233852975034
+Test accuracy: 0.8456686291000841
+Test weighted F1: 0.8426153735308255
+Test AUC-ROC: 0.9505210098508527
+
+Classification report:
+              precision    recall  f1-score   support
+
+        EXPL       1.00      0.24      0.38        17
+          HB       0.56      0.49      0.52       108
+          LP       0.87      0.90      0.88      2520
+         TRE       0.46      0.24      0.32        50
+       TREMI       0.79      0.65      0.72       142
+       TRESP       0.63      0.51      0.57        37
+         VLP       0.69      0.87      0.77       110
+          VT       0.85      0.84      0.84      1772
+
+    accuracy                           0.85      4756
+   macro avg       0.73      0.59      0.62      4756
+weighted avg       0.84      0.85      0.84      4756
+
+Confusion matrix:
+[[   4    0    8    0    0    0    0    5]
+ [   0   53   21    1    3    0   14   16]
+ [   0   12 2264    1    1    0   16  226]
+ [   0    4   10   12   12    0    2   10]
+ [   0    1   20   10   93   11    3    4]
+ [   0    0   10    1    7   19    0    0]
+ [   0    2    6    1    2    0   96    3]
+ [   0   23  260    0    0    0    8 1481]]
