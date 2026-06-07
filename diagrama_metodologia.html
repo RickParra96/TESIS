@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagrama metodológico - Clasificación de eventos sísmicos Cotopaxi</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5d6b82;
+      --paper: #fffaf0;
+      --grid: rgba(23, 32, 51, 0.06);
+      --blue: #1d4ed8;
+      --cyan: #0891b2;
+      --green: #059669;
+      --amber: #d97706;
+      --rose: #e11d48;
+      --purple: #7c3aed;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        radial-gradient(circle at 15% 10%, rgba(125, 211, 252, 0.28), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(253, 186, 116, 0.22), transparent 25%),
+        radial-gradient(circle at 50% 95%, rgba(196, 181, 253, 0.24), transparent 34%),
+        var(--paper);
+      background-size: 28px 28px, 28px 28px, auto, auto, auto, auto;
+      padding: 34px;
+    }
+
+    .board {
+      max-width: 1580px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 20px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .title-card,
+    .paper-card,
+    .block,
+    .mini-card,
+    .legend {
+      background: rgba(255, 255, 255, 0.86);
+      border: 2px solid rgba(23, 32, 51, 0.08);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .title-card {
+      padding: 28px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .title-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 230px;
+      height: 230px;
+      background: radial-gradient(circle, rgba(29, 78, 216, 0.18), transparent 68%);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .subtitle {
+      margin: 0;
+      max-width: 960px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .paper-card {
+      padding: 24px;
+      display: grid;
+      align-content: center;
+      gap: 14px;
+      border-style: dashed;
+    }
+
+    .paper-card strong {
+      font-size: 1.05rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 7px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #0f172a;
+      font-size: 0.83rem;
+      font-weight: 750;
+      background: #eef2ff;
+      border: 1px solid rgba(99, 102, 241, 0.22);
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(215px, 1fr));
+      gap: 18px;
+      align-items: stretch;
+      position: relative;
+    }
+
+    .block {
+      min-height: 365px;
+      padding: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transform: rotate(var(--tilt));
+    }
+
+    .block::before {
+      content: attr(data-step);
+      position: absolute;
+      top: -13px;
+      left: 18px;
+      min-width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      background: var(--accent);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.2);
+    }
+
+    .block::after {
+      content: "➜";
+      position: absolute;
+      right: -24px;
+      top: 50%;
+      transform: translateY(-50%) rotate(calc(var(--tilt) * -1));
+      z-index: 3;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 1.45rem;
+      font-weight: 900;
+      background: #111827;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+    }
+
+    .block:last-child::after {
+      content: "🏁";
+      background: var(--green);
+    }
+
+    .block h2 {
+      margin: 8px 0 2px;
+      color: var(--accent);
+      font-size: 1.26rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .block .notebook {
+      width: fit-content;
+      max-width: 100%;
+      border-radius: 12px;
+      padding: 7px 10px;
+      background: color-mix(in srgb, var(--accent) 12%, white);
+      color: color-mix(in srgb, var(--accent) 72%, black);
+      font-size: 0.78rem;
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+    .block p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.94rem;
+    }
+
+    .block ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .block li {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 8px;
+      align-items: start;
+      color: #334155;
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+
+    .output {
+      margin-top: auto;
+      border-radius: 16px;
+      padding: 12px;
+      background: #0f172a;
+      color: white;
+      font-size: 0.84rem;
+      line-height: 1.38;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .output code,
+    .mini-card code {
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 0.88em;
+    }
+
+    .swimlanes {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 1fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .mini-card,
+    .legend {
+      padding: 18px;
+    }
+
+    .mini-card h3,
+    .legend h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+
+    .mini-card ul,
+    .legend ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #475569;
+      line-height: 1.5;
+      font-size: 0.92rem;
+    }
+
+    .legend {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 22px;
+      align-items: start;
+      border-style: dashed;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .metric {
+      border-radius: 16px;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+      font-size: 0.86rem;
+      color: #475569;
+      font-weight: 750;
+    }
+
+    .metric span {
+      display: block;
+      font-size: 1.35rem;
+      margin-bottom: 3px;
+    }
+
+    .caption {
+      margin: 20px auto 0;
+      max-width: 1180px;
+      color: #475569;
+      font-size: 0.94rem;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    @media (max-width: 1280px) {
+      .pipeline {
+        grid-template-columns: repeat(2, minmax(260px, 1fr));
+      }
+
+      .block::after {
+        content: "⬇";
+        right: 18px;
+        top: auto;
+        bottom: -24px;
+        transform: none;
+      }
+
+      .block:last-child::after {
+        content: "🏁";
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 18px;
+      }
+
+      .hero,
+      .pipeline,
+      .swimlanes,
+      .legend {
+        grid-template-columns: 1fr;
+      }
+
+      .block {
+        transform: none;
+      }
+
+      .metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media print {
+      body {
+        padding: 12px;
+        background: white;
+      }
+
+      .board {
+        max-width: none;
+      }
+
+      .title-card,
+      .paper-card,
+      .block,
+      .mini-card,
+      .legend {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      .pipeline {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+      }
+
+      .block {
+        min-height: 320px;
+        padding: 14px;
+        transform: none;
+      }
+
+      .block::after {
+        right: -18px;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <section class="hero">
+      <div class="title-card">
+        <h1>🧭 Metodología del estudio</h1>
+        <p class="subtitle">
+          Flujo reproducible para clasificar eventos sísmicos del volcán Cotopaxi a partir de datos tabulares:
+          integración de fuentes, análisis exploratorio, depuración de clases, selección robusta de variables y
+          comparación de modelos supervisados clásicos y basados en redes/transformers tabulares.
+        </p>
+      </div>
+
+      <aside class="paper-card">
+        <strong>📌 Lectura para sección de metodología</strong>
+        <div class="pill-row">
+          <span class="pill">🌋 Eventos Cotopaxi</span>
+          <span class="pill">🎯 Target: <code>Type</code></span>
+          <span class="pill">🧪 Validación estratificada</span>
+          <span class="pill">📦 Artefactos reproducibles</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="pipeline" aria-label="Diagrama de bloques metodológico">
+      <article class="block" data-step="1" style="--accent: var(--blue); --tilt: -0.7deg;">
+        <div class="notebook">📓 merge_datasets.ipynb</div>
+        <h2>📥 Integración de fuentes sísmicas</h2>
+        <p>Construcción del dataset unificado desde fuentes heterogéneas con metadatos y características precomputadas.</p>
+        <ul>
+          <li><span>🗂️</span><span>Carga de <code>Feature_Station_2015.json</code> y <code>SeisBenchV1_v1_1.json</code>.</span></li>
+          <li><span>🧹</span><span>Eliminación de columnas no predictivas: estación, canal e identificadores.</span></li>
+          <li><span>🔁</span><span>Normalización de nombres de variables con prefijos redundantes.</span></li>
+          <li><span>🧩</span><span>Concatenación por unión de columnas para preservar información común y específica.</span></li>
+        </ul>
+        <div class="output">Salida: <code>merged_datasets.json</code><br />Base tabular integrada para análisis.</div>
+      </article>
+
+      <article class="block" data-step="2" style="--accent: var(--cyan); --tilt: 0.9deg;">
+        <div class="notebook">📓 EDA_merged_datasets.ipynb</div>
+        <h2>🔎 Diagnóstico exploratorio</h2>
+        <p>Evaluación de estructura, separabilidad y calidad antes de tomar decisiones de modelado.</p>
+        <ul>
+          <li><span>📊</span><span>Distribución de clases sísmicas para detectar desbalance.</span></li>
+          <li><span>🧮</span><span>Resumen estadístico por familias: temporales <code>t_</code>, frecuenciales <code>f_</code> y wavelet <code>w_</code>.</span></li>
+          <li><span>🗺️</span><span>Proyección no lineal con UMAP o t-SNE tras <code>StandardScaler</code>.</span></li>
+          <li><span>🕸️</span><span>Matriz de correlación para identificar redundancia entre atributos.</span></li>
+        </ul>
+        <div class="output">Salida: evidencia visual<br />Distribuciones, varianzas, embeddings y correlaciones.</div>
+      </article>
+
+      <article class="block" data-step="3" style="--accent: var(--amber); --tilt: -0.4deg;">
+        <div class="notebook">📓 feature_engineering.ipynb</div>
+        <h2>🧱 Curación del dataset de modelado</h2>
+        <p>Depuración de clases y generación del dataset final de entrada para selección de características.</p>
+        <ul>
+          <li><span>🚫</span><span>Remoción de clases fuera de alcance o poco representativas: <code>TRBA</code>, <code>ICEQUAKE</code>, <code>REGIONAL</code>.</span></li>
+          <li><span>🌊</span><span>Consolidación/filtrado de eventos asociados a la familia <code>VLP</code>.</span></li>
+          <li><span>🧾</span><span>Reindexación limpia para evitar arrastre de índices del dataset original.</span></li>
+          <li><span>💾</span><span>Persistencia multiformato para reproducibilidad y portabilidad.</span></li>
+        </ul>
+        <div class="output">Salida: <code>data_model.csv</code>, <code>.json</code>, <code>.pkl</code><br />Dataset curado para ML.</div>
+      </article>
+
+      <article class="block" data-step="4" style="--accent: var(--purple); --tilt: 0.6deg;">
+        <div class="notebook">📓 feature_selection.ipynb</div>
+        <h2>🧬 Selección robusta de variables</h2>
+        <p>Reducción dimensional por consenso, combinando criterios supervisados y no supervisados.</p>
+        <ul>
+          <li><span>🧼</span><span>Imputación por mediana, <code>LabelEncoder</code> del target y estandarización.</span></li>
+          <li><span>📉</span><span><code>VarianceThreshold</code> para eliminar variables con baja variabilidad.</span></li>
+          <li><span>🕸️</span><span><code>Laplacian Score</code> usando grafo RBF para preservar estructura local.</span></li>
+          <li><span>🎯</span><span>ANOVA F-test y <code>mutual_info_classif</code> para relevancia respecto a la clase.</span></li>
+          <li><span>🏆</span><span>Ranking Borda para fusionar rankings y elegir las 30 mejores variables.</span></li>
+        </ul>
+        <div class="output">Salida: <code>data_model_borda30.csv</code><br />Top-30 features + <code>Type</code>.</div>
+      </article>
+
+      <article class="block" data-step="5" style="--accent: var(--rose); --tilt: -0.8deg;">
+        <div class="notebook">📓 random_forest_borda30.ipynb</div>
+        <h2>🤖 Modelado, comparación y trazabilidad</h2>
+        <p>Entrenamiento supervisado sobre las variables Borda-30 y evaluación con métricas de clasificación.</p>
+        <ul>
+          <li><span>🎲</span><span>Semilla fija <code>random_state=42</code> en Python, NumPy y Torch.</span></li>
+          <li><span>✂️</span><span><code>train_test_split</code> 80/20 estratificado por clase.</span></li>
+          <li><span>🌲</span><span>Baseline Random Forest con <code>Pipeline</code>, <code>StandardScaler</code> y <code>RandomizedSearchCV</code>.</span></li>
+          <li><span>🧠</span><span>Comparación con TabNet y TabPFN como modelos tabulares avanzados.</span></li>
+          <li><span>📈</span><span>Métricas: accuracy, F1 ponderado, AUC-ROC, matriz de confusión, ROC y t-SNE.</span></li>
+        </ul>
+        <div class="output">Salida: <code>results/&lt;timestamp&gt;/</code><br />Modelos, métricas, figuras, manifest y requirements.</div>
+      </article>
+    </section>
+
+    <section class="swimlanes">
+      <div class="mini-card">
+        <h3>🧪 Variables científicas</h3>
+        <ul>
+          <li>Familias temporales: atributos con prefijo <code>t_</code>.</li>
+          <li>Familias frecuenciales: atributos con prefijo <code>f_</code>.</li>
+          <li>Familias wavelet: atributos con prefijo <code>w_</code>.</li>
+          <li>Etiqueta supervisada: tipo de evento sísmico <code>Type</code>.</li>
+        </ul>
+      </div>
+
+      <div class="mini-card">
+        <h3>⚙️ Decisiones de ML</h3>
+        <ul>
+          <li>Imputación robusta por mediana para valores faltantes.</li>
+          <li>Estandarización para métodos sensibles a escala y embeddings.</li>
+          <li>Validación estratificada para conservar proporciones de clases.</li>
+          <li>Optimización por F1 ponderado para clases desbalanceadas.</li>
+        </ul>
+      </div>
+
+      <div class="mini-card">
+        <h3>📦 Reproducibilidad</h3>
+        <ul>
+          <li>Hash SHA-256 del dataset usado en entrenamiento.</li>
+          <li>Commit Git, timestamp UTC y semilla de ejecución.</li>
+          <li>Exportación de modelos, métricas, figuras y dependencias.</li>
+          <li>Carpeta autocontenida <code>results/&lt;timestamp&gt;/</code>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="legend">
+      <div>
+        <h3>📝 Texto sugerido para el paper</h3>
+        <ul>
+          <li>El flujo metodológico transforma fuentes sísmicas heterogéneas en un dataset tabular curado.</li>
+          <li>La selección de características combina criterios estadísticos, informacionales y geométricos mediante consenso Borda.</li>
+          <li>El desempeño se evalúa comparando un baseline Random Forest contra arquitecturas tabulares avanzadas.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>📏 Indicadores reportables</h3>
+        <div class="metric-grid">
+          <div class="metric"><span>✅</span>Accuracy</div>
+          <div class="metric"><span>⚖️</span>F1 ponderado</div>
+          <div class="metric"><span>📈</span>AUC-ROC</div>
+          <div class="metric"><span>🧮</span>Matriz confusión</div>
+        </div>
+      </div>
+    </section>
+
+    <p class="caption">
+      Figura. Diagrama de bloques del enfoque metodológico para la clasificación de eventos sísmicos del Cotopaxi.
+      El flujo resume las notebooks del proyecto desde la integración de datos hasta la evaluación reproducible de modelos.
+    </p>
+  </main>
+</body>
+</html>
