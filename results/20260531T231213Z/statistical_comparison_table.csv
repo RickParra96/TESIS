@@ -1,0 +1,4 @@
+Model,Mean F1,Std Dev,Min F1,Max F1,vs RF (Δ),P-Value
+Random Forest (Baseline),0.8505,0.0056,0.8451,0.8612,Baseline,-
+TabNet_3,0.8576,0.0085,0.8488,0.8724,+0.0071,0.059210
+TabPFN_3,0.8986,0.0063,0.8894,0.9057,+0.0481,0.000180
